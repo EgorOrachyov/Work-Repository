@@ -24,7 +24,7 @@ void input() {
     int a[1] = {1};
 
     int stop = NO;
-    while(!stop){
+    while(!stop) {
 
     	printf("address (main)  = 0x%x or %i \n", &main,  &main);
 	    printf("address (input) = 0x%x or %i \n", &input, &input);
