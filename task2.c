@@ -22,18 +22,18 @@ int main() {
 	printf("Введите b: \n");
 	gets(b2);
 	
-    long a = getLong(b1, strlen(b1)); 
-    long b = getLong(b2, strlen(b2)); 
+	long a = getLong(b1, strlen(b1)); 
+	long b = getLong(b2, strlen(b2)); 
 
-    if (a > b) {
-    	printf("a > b \n");
-    }
-    else if (a < b) {
-    	printf("a < b \n");
-    }
-    else {
-    	printf("a = b \n");
-    }
+	if (a > b) {
+		printf("a > b \n");
+	}
+	else if (a < b) {
+		printf("a < b \n");
+		}
+	else {
+		printf("a = b \n");
+	}
 
-    return 0;
+	return 0;
 }	
