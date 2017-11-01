@@ -19,27 +19,25 @@ int main() {
     char s[MAXLEN];
     char res[MAXLEN];
 
-	while (!feof(file)) {
-		fgets(s, MAXLEN, file);
-        
-        // Если убрать этот if, то он выведет
-        // последнюю строку комментария 2 раза ???
-		if (feof(file)) {
-			break;
-		}
+    strcpy(res, "");
 
+    fgets(s, MAXLEN, file);
+	while (!feof(file)) {
 		int i = 0;
 		while (i < strlen(s) - 1) {
 			if ((s[i] == '/') && (s[i + 1] == '/')) {
 
-                strcpy(res, "");
+                
 				strcat(res, &s[i]);
 				printf("%s", res); 
+				strcpy(res, "");
 				break;
 			}
 
 			i += 1;
 		}
+		
+		fgets(s, MAXLEN, file);
 	}
 
 	fclose(file);
