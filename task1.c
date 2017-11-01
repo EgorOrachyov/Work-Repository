@@ -9,9 +9,9 @@ int main() {
 	char c;
 	char string[MAXLEN];
   
-	printf("Строка: \n");
+	printf("Введите строку: \n");
 	gets(string);
-	printf("Символ: \n");
+	printf("Введите символ: \n");
 	c = getchar();
 
 	int i = 0;

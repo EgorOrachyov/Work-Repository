@@ -2,46 +2,38 @@
 #include<stdlib.h>
 #include<string.h>
 
+long getLong(char * s, int l) {
+	long a = 0;
+	for(int i = 0; i < l; i++) {
+		a = a*2 + (s[i] - '0');
+	}
+	return a;
+}
+
 const int MAXLEN = 256;
 
 int main() {
 
 	char b1[MAXLEN];
-	printf("first: \n");
+	printf("Введите a: \n");
 	gets(b1);
 	
 	char b2[MAXLEN];
-	printf("second: \n");
+	printf("Введите b: \n");
 	gets(b2);
+	
+    long a = getLong(b1, strlen(b1)); 
+    long b = getLong(b2, strlen(b2)); 
 
-	int len1 = strlen(b1);
-	int len2 = strlen(b2);
+    if (a > b) {
+    	printf("a > b \n");
+    }
+    else if (a < b) {
+    	printf("a < b \n");
+    }
+    else {
+    	printf("a = b \n");
+    }
 
-
-	if (len1 > len2) {
-		printf("1 больше чем 2 \n");
-	}
-	else if (len2 > len1) {
-		printf("2 больше чем 1 \n");
-	}
-	else {
-		int i = 0;
-		char delta = 0; 
-		while ((delta == 0) && (i < len1)) {
-			delta = b1[i] - b2[i];
-			i += 1;	
-		}
-
-		if (delta == 0) {
-			printf("1 равно 2 \n");
-		}
-		else if (delta > 0) {
-			printf("1 больше чем 2 \n");
-		}
-		else {
-			printf("2 больше чем 1 \n");
-		}
-	}
-
-	return 0;
-}
+    return 0;
+}	
