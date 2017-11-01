@@ -6,12 +6,12 @@ const int MAXLEN = 256;
 
 int main() {
   
-    char name[MAXLEN];
-    printf("Введите имя файла: \n");
-    gets(name);
+	char name[MAXLEN];
+	printf("Введите имя файла: \n");
+	gets(name);
 
-    FILE * file = fopen(name, "r");
-    if (!file) {
+	FILE * file = fopen(name, "r");
+	if (!file) {
 		printf("Cannot open file");
 		exit(1);
 	}
