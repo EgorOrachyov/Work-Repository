@@ -14,8 +14,8 @@ int main() {
     
     FILE * file = fopen(name, "r");
     if (file == NULL) {
-    	printf("Error: cannot open the file\n");
-    	exit(1);
+        printf("Error: cannot open the file\n");
+        exit(1);
     }
 
     int n = 0;
@@ -39,28 +39,26 @@ int main() {
     int cmp;
     char * individual = "#";
     for(int i = 0; i < n; i++) {
-    	cmp = 0;
-    	for(int j = 0; j < n; j++) {
-    		if (i != j) {
-    			cmp = strcmp(data[i], data[j]);
-    		    if (!cmp) {
-    			    break;
-    		    } 
-    		}
-    	}
-    	if (cmp) {
-    		individual = data[i];;
-    		break;
-    	}
+        cmp = 0;
+        for(int j = 0; j < n; j++) {
+            if (i != j) {
+                cmp = strcmp(data[i], data[j]);
+                if (!cmp) {
+                    break;
+                } 
+            }
+        }
+        if (cmp) {
+            individual = data[i];;
+            break;
+        }
     }
 
     printf("%s", individual);
      
-
     for(int i = 0; i < n; i++) {
-    	free(data[i]);
-    }
+        free(data[i]);}
     free(data);
   
-	return 0;
+    return 0;
 }

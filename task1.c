@@ -6,16 +6,16 @@ const int MAXLEN = 256;
 
 int main() {
 
-    char c;
+	char c;
 	char string[MAXLEN];
   
-    printf("Строка: \n");
+	printf("Строка: \n");
 	gets(string);
 	printf("Символ: \n");
 	c = getchar();
 
-    int i = 0;
-    int len = strlen(string);
+	int i = 0;
+	int len = strlen(string);
 	while (i < len) {
 		if (string[i] == c) {
 			
@@ -25,9 +25,10 @@ int main() {
 				j += 1;
 			}
 		}
-		i += 1;
+		i += 1;	
 	}
 
 	printf("%s\n", string);
 
+	return 0;
 }

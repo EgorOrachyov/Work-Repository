@@ -17,5 +17,5 @@ int main() {
 
 	printf("%li \n", res);
 
-    return 0;
+	return 0;
 }

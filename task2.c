@@ -6,17 +6,17 @@ const int MAXLEN = 256;
 
 int main() {
 
-    char b1[MAXLEN];
-    printf("first: \n");
-    gets(b1);
+	char b1[MAXLEN];
+	printf("first: \n");
+	gets(b1);
 	
-
 	char b2[MAXLEN];
-    printf("second: \n");
-    gets(b2);
+	printf("second: \n");
+	gets(b2);
 
-    int len1 = strlen(b1);
-    int len2 = strlen(b2);
+	int len1 = strlen(b1);
+	int len2 = strlen(b2);
+
 
 	if (len1 > len2) {
 		printf("1 больше чем 2 \n");
@@ -29,7 +29,7 @@ int main() {
 		char delta = 0; 
 		while ((delta == 0) && (i < len1)) {
 			delta = b1[i] - b2[i];
-			i += 1;
+			i += 1;	
 		}
 
 		if (delta == 0) {
@@ -42,4 +42,6 @@ int main() {
 			printf("2 больше чем 1 \n");
 		}
 	}
+
+	return 0;
 }
