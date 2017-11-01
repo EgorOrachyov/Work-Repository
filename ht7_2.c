@@ -24,7 +24,7 @@ void input() {
     int a[1] = {1};
 
     int stop = NO;
-    while(!stop) {
+    while (!stop) {
 
         printf("address (main)  = 0x%x or %i \n", &main,  &main);
         printf("address (input) = 0x%x or %i \n", &input, &input);
@@ -33,19 +33,19 @@ void input() {
 
         int num = 0;
         int flag = NO;
-        while(!flag) {
+        while (!flag) {
             printf("Enter number of stack elements for outputting: ");
-            flag = scanf("%i",&num);
+            flag = scanf("%i", &num);
         }
 
-        for(int i = 0; i<num; i++) {
-            printf("a[%i] = 0x%x or %i \n",i,a[i],a[i]);
+        for(int i = 0; i < num; i++) {
+            printf("a[%i] = 0x%x or %i \n", i, a[i], a[i]);
         }
  
         printf("======================================== \n");	
 
         flag = YES;
-        while(flag) {
+        while (flag) {
             printf("Enter i - index of array a and x - this value for replacement (-1 -1 to exit): ");
         	
             int i,x;
@@ -66,7 +66,7 @@ void input() {
         printf("======================================== \n");	
 
         flag = YES;
-        while(flag) {
+        while (flag) {
             printf("Enter 0 to leave \"input\" function or 1 (or another number) to go to the beginning \n");
 
             int x;
