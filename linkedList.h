@@ -251,4 +251,28 @@ void printLinkedList(LinkedList * list) {
 	}
 }
 
+
+// Reverse linked list (head is tail and tail is head)
+int reverseLinkedList(LinkedList * list) {
+	if (list->length == 1) {
+		return TRUE;
+	}
+	else {
+		Node * next = list->head->next;
+		Node * current = list->head; 
+		current->next = NULL;
+
+		while (next) {
+			Node * tmp = next;
+			next = next->next;
+			tmp->next = current;
+			current = tmp;
+		}
+
+		list->head = current;
+
+		return TRUE;    	
+	}
+}
+
 #endif

@@ -22,7 +22,8 @@ int main() {
         printf("5. Add after \n");
         printf("6. Remove with value \n");
         printf("7. Free \n");
-        printf("8. End \n");
+        printf("8. Reverese \n");
+        printf("9. End \n");
         
         int command;
         int isCorrect = FALSE;
@@ -56,7 +57,7 @@ int main() {
                 printf("List has been already created \n");
             }
         }
-        else if (command == 8) {
+        else if (command == 9) {
             printf("Exit the application \n");
             isDone = TRUE;
         }
@@ -147,6 +148,10 @@ int main() {
             else if (command == 7) {
                 freeLinkedList(list);
                 printf("Linked list has been cleaned \n");
+            }
+            else if (command == 8) {
+                reverseLinkedList(list);
+                printf("List is reversed \n");
             }
         }
         else {
