@@ -23,7 +23,9 @@ int main() {
         printf("6. Remove with value \n");
         printf("7. Free \n");
         printf("8. Reverese \n");
-        printf("9. End \n");
+        printf("9. Create Loop \n");
+        printf("10. Is looped \n");        
+        printf("11. End \n");
         
         int command;
         int isCorrect = FALSE;
@@ -57,7 +59,7 @@ int main() {
                 printf("List has been already created \n");
             }
         }
-        else if (command == 9) {
+        else if (command == 11) {
             printf("Exit the application \n");
             isDone = TRUE;
         }
@@ -93,20 +95,25 @@ int main() {
                 data value;
                 isCorrect = FALSE;
 
-                while (!isCorrect) {
-                    printf("Enter value of new element \n");
-                    int x = scanf("%i", &value);
+                if (!isListLooped(list)) {
+                    while (!isCorrect) {
+                        printf("Enter value of new element \n");
+                        int x = scanf("%i", &value);
 
-                    if (x) {
-                        int ok = addIntoEnd(list, value);
-                        if (ok) {
-                            printf("Element had been added \n");
+                        if (x) {
+                            int ok = addIntoEnd(list, value);
+                            if (ok) {
+                                printf("Element had been added \n");
+                            }
+                            else {
+                                printf("Element hasn't been added \n");
+                            }
+                            isCorrect = TRUE;
                         }
-                        else {
-                            printf("Element hasn't been added \n");
-                        }
-                        isCorrect = TRUE;
                     }
+                }
+                else {
+                    printf("You couldn't add elements into end \n");
                 }
             }
             else if (command == 5) {
@@ -134,15 +141,20 @@ int main() {
                 data value;
                 isCorrect = FALSE;
 
-                while (!isCorrect) {
-                    printf("Enter value to find and remove elements by this value: \n");
-                    int x = scanf("%i", &value);
+                if (!isListLooped(list)) {
+                    while (!isCorrect) {
+                        printf("Enter value to find and remove elements by this value: \n");
+                        int x = scanf("%i", &value);
 
-                    if (x) {
-                        int count = deleteElementByValue(list, value);
-                        printf("Were elements deleted: %i \n", count);
-                        isCorrect = TRUE;
+                        if (x) {
+                            int count = deleteElementByValue(list, value);
+                            printf("Were elements deleted: %i \n", count);
+                            isCorrect = TRUE;
+                        }
                     }
+                }
+                else {
+                    printf("You couldn't remove elements \n");
                 }
             }
             else if (command == 7) {
@@ -150,8 +162,49 @@ int main() {
                 printf("Linked list has been cleaned \n");
             }
             else if (command == 8) {
-                reverseLinkedList(list);
-                printf("List is reversed \n");
+                if (!isListLooped(list)) {
+                    reverseLinkedList(list);
+                    printf("List is reversed \n");
+                }
+                else {
+                    printf("You couldn't reverse list \n");
+                }
+            }
+            else if (command == 9) {
+                isCorrect = FALSE;
+                long index;
+
+                if (!isListLooped(list)) {
+                    while (!isCorrect) {
+                        printf("Enter number of element to create a loop \n");
+                        int x = scanf("%li", &index);
+
+                        if (x) {
+                            int ok = createLoop(list, index);
+
+                            if (ok) {
+                                printf("Loop has been created \n");
+                            }
+                            else {
+                                printf("Loop hasn't been created \n");
+                            }
+                            isCorrect = TRUE;
+                        }
+                    }
+                }
+                else {
+                    printf("You couldn't create another loop \n");
+                }
+            }
+            else if (command == 10) {
+                int isLooped = isListLooped(list);
+
+                if (isLooped) {
+                    printf("List is looped \n");
+                }
+                else {
+                    printf("List is not looped \n");
+                }
             }
         }
         else {

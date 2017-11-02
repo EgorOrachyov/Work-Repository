@@ -275,4 +275,60 @@ int reverseLinkedList(LinkedList * list) {
 	}
 }
 
+
+// Returns TRUE if list looped else returns FALSE
+int isListLooped(LinkedList * list) {
+	int isLooped = FALSE;
+	
+	Node * ptr1 = list->head;
+	Node * ptr2 = list->head;
+
+	while (ptr2) {
+		ptr1 = ptr1->next;
+		ptr2 = ptr2->next;
+
+		if (ptr2) {
+			ptr2 = ptr2->next;
+		}	
+
+		if (ptr1 == ptr2) {
+			isLooped = TRUE;
+			break;
+		}
+	}
+
+	return isLooped;
+}
+
+
+// Create loop in list
+int createLoop(LinkedList * list, long index) {
+	Node * current = list->head;
+	Node * tmp = NULL;
+	Node * prev;
+
+	if (!isListLooped(list)) {
+		long i = 0;
+		while (current) {
+			if (i == index) {
+				tmp = current;
+			}
+			i += 1;
+			prev = current;
+			current = current->next;
+		}
+
+		if (tmp == NULL) {
+			return FALSE;
+		}
+		else {
+			prev->next = tmp;
+			return TRUE;
+		}
+	}
+	else {
+		return FALSE;
+	}
+}
+
 #endif
