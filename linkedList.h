@@ -1,5 +1,5 @@
 #ifndef _LINKEDLIST_H_
-  #define _LINKEDLIST_H_
+#define _LINKEDLIST_H_
 
 #include <stdio.h>
 #include <stddef.h>
@@ -170,7 +170,7 @@ int addAfterI(LinkedList * list, long index, data value) {
 
 					return TRUE;
 				}
-                
+				
 				i += 1;
 				current = current->next;
 			}
@@ -187,7 +187,7 @@ int addAfterI(LinkedList * list, long index, data value) {
 void freeLinkedList(LinkedList * list) {
 	Node * current = list->head;
 	Node * tmp;
-    
+	
 	for(int i = 0; i < list->length; i++) {	
 		tmp = current->next;
 		free(current);
