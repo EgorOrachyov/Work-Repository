@@ -7,11 +7,11 @@ int max(int a, int b) {
 
 // return length of string
 int strlen(char *s) {
-  int i = 0; 
-  while (s[i] != '\0') {
-	i++;
-  }
-  return i;
+ 	int i = 0; 
+ 	while (s[i] != '\0') {
+		i++;
+ 	}
+ 	return i;
 }
 
 // copy string source to string destination
