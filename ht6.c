@@ -31,9 +31,11 @@ void definedPrintOfFloat(struct Method a[], int methodsCount);
 
 int main() {
  
-	struct Method methods[] = {{"uses union of float and int", firstMethod}, 
-							   {"uses union of float and struct with bit-fields", secondMethod}, 
-							   {"uses pointer", thirdMethod}};
+	struct Method methods[] = {
+		{"uses union of float and int", firstMethod}, 
+		{"uses union of float and struct with bit-fields", secondMethod}, 
+		{"uses pointer", thirdMethod}
+	};
 
 	int methodsCount = sizeof(methods) / sizeof(struct Method);
 
