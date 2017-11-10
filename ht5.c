@@ -70,20 +70,19 @@ int logicalShift(int x, int n) {
 
 int addOK(int x, int y) {
  
-	int sign = 1 << 31;
-	sign = (sign & x) | (sign & y);
+	int sign = ((x | y) >> 24) & 128;
 
 	int mask = ~(255 << 24);                   
 	int a = (x & mask) + (y & mask); 
-	a = (a >> 24) & 255;  
+	a = (a >> 24);  
 	x = (x >> 24) & 255; 
 	y = (y >> 24) & 255;
 
 	a = (a + x + y);     
-	int b = a >> 7;
+	int b = a & 128;
 	a = a >> 8;
 
-	return ((!a) && (!(1 & b) || sign));
+	return !(a || (b ^ sign));
 }
 
 int bang(int x) {
@@ -144,9 +143,9 @@ int main() {
 	printf("getByte: %x %x \n", 0x12344567, getByte(0x12344567,1));
 
 	printf("logicalShift: %x %x\n", logicalShift(0x80000000,0),logicalShift(0x80000000,8));
-
-	printf("addOK: %i %i \n",addOK(2147483647,2147483647), addOK(0x300000, 0x70030000));
- 
+    
+	printf("addOK: %i %i %i\n",addOK(2147483647,2147483647), addOK(0x300000, 0x70030000), addOK(0x7fffffff, 0x00000001));
+    
 	printf("bang: %i %i \n", bang(3), bang(0));
 
 	printf("conditional: %i \n", conditional(2,4,5));
