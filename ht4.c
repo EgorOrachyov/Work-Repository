@@ -51,7 +51,7 @@ int strcmp(char * s1, char * s2) {
 
 int main() {
    
-    /*
+	/*
 
 	char s1[] = "abcd";
 	char s2[] = "abcde";
