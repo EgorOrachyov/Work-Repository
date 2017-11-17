@@ -69,20 +69,13 @@ int logicalShift(int x, int n) {
 }
 
 int addOK(int x, int y) {
- 
-	int sign = ((x | y) >> 24) & 128;
-
-	int mask = ~(255 << 24);                   
-	int a = (x & mask) + (y & mask); 
-	a = (a >> 24);  
-	x = (x >> 24) & 255; 
-	y = (y >> 24) & 255;
-
-	a = (a + x + y);     
-	int b = a & 128;
-	a = a >> 8;
-
-	return !(a || (b ^ sign));
+	
+	int a = x + y;
+	int b = a >> 31;
+	x = x >> 31;
+	y = y >> 31;
+  
+	return !(~(x ^ y) & (x ^ b));
 }
 
 int bang(int x) {
@@ -113,8 +106,6 @@ int conditional(int x, int y, int z) {
 	b = b | a;       // 11111111111111111111111111111111
 	a = b;           // 11111111111111111111111111111111
 
-
-
 	return (a & y) | ((~a) & z) ;
 } 
 
@@ -122,8 +113,10 @@ int isPower2(int x) {
 
 	int a = 1;
 	a = (~a) + 1;
-   
-	return (!(x & (x + a)) && (x << 1));
+	int b = ~0;
+	int c = x >> 31;  
+  
+	return !((x & (x + a)) + !(b ^ c));
 }
 
 int main() {
@@ -143,9 +136,9 @@ int main() {
 	printf("getByte: %x %x \n", 0x12344567, getByte(0x12344567,1));
 
 	printf("logicalShift: %x %x\n", logicalShift(0x80000000,0),logicalShift(0x80000000,8));
-    
-	printf("addOK: %i %i %i\n",addOK(2147483647,2147483647), addOK(0x300000, 0x70030000), addOK(0x7fffffff, 0x00000001));
-    
+
+	printf("addOK: %i %i %i\n",addOK(0x10000000,0x7fffffff), addOK(0x80000000, -1), addOK(0x7fffffff, -1));
+
 	printf("bang: %i %i \n", bang(3), bang(0));
 
 	printf("conditional: %i \n", conditional(2,4,5));
@@ -153,6 +146,6 @@ int main() {
 	printf("isPower2: %i %i %i %i \n", isPower2(-2147483648), isPower2(16), isPower2(0), isPower2(-4));
 
 	*/
- 
+
 	return 0;
 }
