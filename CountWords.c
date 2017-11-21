@@ -78,11 +78,13 @@ int main() {
 
 
 		long i = 0;
+		long length = 0;
 		char last = '\0';
 
 		while (string[i] != '\0') {
 			if ((string[i] >= 'a') && (string[i] <= 'z')) {
 				buffer[currentPos] = string[i];
+				length += 1;
 
 				if (last == '\0') {
 					key = &buffer[currentPos];
@@ -93,6 +95,7 @@ int main() {
 			} 
 			else if ((string[i] >= 'A') && (string[i] <= 'Z')) {
 				buffer[currentPos] = string[i] + deltaCase;
+				length += 1;
 
 				if (last == '\0') {
 					key = &buffer[currentPos];
@@ -106,12 +109,22 @@ int main() {
 				currentPos += 1;
 				last = '\0';
 
-				isOk = getElement(HT, key, &value);
-				value += 1;
+				int isIn = getElement(HT, key, &value);
+
+				if (isIn == TRUE) {
+					value += 1;
+					currentPos -= (length + 1);
+				}
+				else {
+					value = 1;
+				}
+
 				addElement(HT, key, value);
+
+				length = 0;
 			} 
 
-			i++;
+			i += 1;
 		}
 	}
 

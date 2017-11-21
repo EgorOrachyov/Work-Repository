@@ -35,37 +35,45 @@ int main() {
 	long sizeListLength = 10;
 	long sizeList[] = {1, 2, 5, 10, 100, 1000, 10000, 100000, 500000, 20000000};
 
+	char * buffer = (char *)calloc(MByte, sizeof(char));
+	if (buffer == NULL) {
+		printf("Error: cannot allocate memory for buffer");
+		exit(1);
+		}
+
+	char * string = (char *)calloc(KByte, sizeof(char));
+	if (string == NULL) {
+		printf("Error: cannot allocate memory for string");
+		exit(1);
+	} 
+
+	int isOk;
+	size = 0;
+	HashTable * HT = createHashTable(size, getHash, &isOk);
+	if ((HT == NULL) || (isOk == 0)) {
+		printf("Error: cannnot create Hash Table \n");
+		exit(1);
+	}
+
 	for(int m = 0; m < sizeListLength; m++) {
 
 		size = sizeList[m];
 
 		double startTime;
-		double currTime;
+		double currTime; 
 
-		int isOk;
-		HashTable * HT = createHashTable(size, getHash, &isOk);
-		if ((HT == NULL) || (isOk == 0)) {
+		freeHashTable(HT);
+		isOk = allocMemoryForTable(HT, size);
+		if (isOk == 0) {
 			printf("Error: cannnot create Hash Table \n");
 			exit(1);
-		} 
+		}
 
 		FILE * file = fopen(fileName, "r");
 		if (file == NULL) {
 			printf("Error: cannot open file");
 			exit(1);
-		}	
-
-		char * buffer = (char *)calloc(MByte, sizeof(char));
-		 if (buffer == NULL) {
-			printf("Error: cannot allocate memory for buffer");
-			exit(1);
-		}
-
-		 char * string = (char *)calloc(KByte, sizeof(char));
-		if (string == NULL) {
-			printf("Error: cannot allocate memory for string");
-			exit(1);
-		}  
+		}	 
 
 		data1 key;
 		data2 value;
@@ -81,11 +89,13 @@ int main() {
 
 
 			long i = 0;
+			long length = 0;
 			char last = '\0';
 
 			while (string[i] != '\0') {
 				if ((string[i] >= 'a') && (string[i] <= 'z')) {
 					buffer[currentPos] = string[i];
+					length += 1;
 
 					if (last == '\0') {
 						key = &buffer[currentPos];
@@ -96,6 +106,7 @@ int main() {
 				} 
 				else if ((string[i] >= 'A') && (string[i] <= 'Z')) {
 					buffer[currentPos] = string[i] + deltaCase;
+					length += 1;
 
 					if (last == '\0') {
 						key = &buffer[currentPos];
@@ -109,12 +120,22 @@ int main() {
 					currentPos += 1;
 					last = '\0';
 
-					isOk = getElement(HT, key, &value);
-					value += 1;
+					int isIn = getElement(HT, key, &value);
+
+					if (isIn == TRUE) {
+						value += 1;
+						currentPos -= (length + 1);
+					}
+					else {
+						value = 1;
+					}
+
 					addElement(HT, key, value);
+
+					length = 0;
 				} 
 
-				i++;
+				i += 1;
 			}
 		}
 
@@ -131,14 +152,15 @@ int main() {
 		printf("Used time: %lf \n", currTime);
 		printf("-------------------------------- \n");
 
-		deleteHashTable(HT);
 		fclose(file);
-		free(buffer);
-		free(string);
 
 		printf("\n");
 
 	}
  
+	deleteHashTable(HT);
+	free(buffer);
+	free(string);
+
 	return 0;
 }
