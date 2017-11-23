@@ -7,13 +7,6 @@ const long KByte = 1024;
 const long MByte = 1024 * 1024;
 const long GByte = 1024 * 1024 * 1024;
 
-int simple = 17;
-long size;
-
-long getHash(char * string) {
-	return getHash2(string, simple, size);
-}
-
 data1 mostPopularWord;
 data2 mostPopularWordCount;
 
@@ -34,13 +27,14 @@ int main() {
 	printf("Enter file name to count words: \n");
 	gets(fileName);
 
-	size = 200000;
+	long size = 200000;
+	int simple = 17;
 
 	double startTime;
 	double currTime;
 
 	int isOk;
-	HashTable * HT = createHashTable(size, getHash, &isOk);
+	HashTable * HT = createHashTable(size, getHash2, simple, &isOk);
 	if ((HT == NULL) || (isOk == 0)) {
 		printf("Error: cannnot create Hash Table \n");
 		exit(1);

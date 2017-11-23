@@ -11,7 +11,7 @@ long getHash1(char * string, int simple, long limit) {
 
 	for(int i = 0; i < length; i++) {
 		hash = (hash + string[i] * p) % limit;
-		p = p * simple;
+		p = (p * simple) % limit;
 	}
 
 	return hash;

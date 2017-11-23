@@ -9,13 +9,6 @@ const long GByte = 1024 * 1024 * 1024;
 
 const char * fileName = "Fifty Shades of Grey.txt";
 
-int simple = 17;
-long size;
-
-long getHash(char * string) {
-	return getHash2(string, simple, size);
-}
-
 data1 mostPopularWord;
 data2 mostPopularWordCount;
 
@@ -48,8 +41,9 @@ int main() {
 	} 
 
 	int isOk;
-	size = 0;
-	HashTable * HT = createHashTable(size, getHash, &isOk);
+	long size = 0;
+	int simple = 17;
+	HashTable * HT = createHashTable(size, getHash2, simple, &isOk);
 	if ((HT == NULL) || (isOk == 0)) {
 		printf("Error: cannnot create Hash Table \n");
 		exit(1);
@@ -141,8 +135,8 @@ int main() {
 
 		currTime = ((double)clock() - startTime) / CLOCKS_PER_SEC;
 
-		printf("------ Hash table element ------ \n");
-		iterateByKeyValue(HT, printTable);
+		//printf("------ Hash table element ------ \n");
+		//iterateByKeyValue(HT, printTable);
 		printf("------- Most common word ------- \n");
 		mostPopularWordCount = 0;
 		iterateByKeyValue(HT, getMostCommonWord);

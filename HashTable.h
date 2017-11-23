@@ -9,15 +9,15 @@
 
 typedef char * string;
 typedef void (*iterateType)(data1, data2);
-typedef long (*hashType)(data1);
+typedef long (*hashType)(data1, int, long);
 
 typedef struct {
 	long size;
 	long numOfElements;
 	LinkedList ** table;
+	int simple;
 	hashType hash;
 } HashTable;
-
 
 // Allocate memory for table and each linked list
 int allocMemoryForTable(HashTable * HT, long size) {
@@ -72,7 +72,7 @@ void deleteHashTable(HashTable * HT) {
 
 
 // Create HashTable and returns TRUE if it is ok 
-HashTable * createHashTable(long size, hashType hashFunction, int * isOk) {
+HashTable * createHashTable(long size, hashType hashFunction, int simple, int * isOk) {
 	HashTable * HT = (HashTable *)calloc(1, sizeof(HashTable));
 
 	if (HT != NULL) {
@@ -80,7 +80,7 @@ HashTable * createHashTable(long size, hashType hashFunction, int * isOk) {
 
 		if (*isOk) {
 			HT->hash = hashFunction;
-			HT->size = size;
+			HT->simple = simple;
 			HT->numOfElements = 0; 
 		}
 	} 
@@ -90,7 +90,7 @@ HashTable * createHashTable(long size, hashType hashFunction, int * isOk) {
 
 // Add element is list and returns TRUE or FALSE if cannot add element
 int addElement(HashTable * HT, data1 key, data2 value) {
-	long hash = HT->hash(key);
+	long hash = HT->hash(key, HT->simple, HT->size);
 	Node * node = getElementFromList(HT->table[hash], key);
 
 	if (node != NULL) { 
@@ -124,7 +124,7 @@ void iterateByKeyValue(HashTable * HT, iterateType iterateFunction) {
 
 // Return TRUE and element value if it is in table or return FALSE
 int getElement(HashTable * HT, data1 key, data2 * value) { 
-	long hash = HT->hash(key);
+	long hash = HT->hash(key, HT->simple, HT->size);
 	data2 result;
 	int isIn = getValueFromList(HT->table[hash], key, &result);
 
@@ -156,10 +156,10 @@ long getMinListLength(HashTable * HT) {
 	long min = 0;
 
 	if (HT->size > 0) {
-		min = HT->table[0]->length;
+		min = HT->numOfElements;
 
 		for(long i = 0; i < HT->size; i++) {
-			if (HT->table[i]->length < min) {
+			if ((HT->table[i]->length < min) && (HT->table[i]->length >= 1)) {
 				min = HT->table[i]->length;
 			}
 		}
@@ -201,7 +201,7 @@ void printHashTableStat(HashTable * HT) {
 	long minListLength = getMinListLength(HT);
 	long numOfEmptyLists = getNumOfEmptyLists(HT);
 	long numOfNotEmptyLists = getNumOfNotEmptyLists(HT);
-	double averageListLength = (double)HT->numOfElements / (double)HT->size;
+	double averageListLength = (double)HT->numOfElements / (double)numOfNotEmptyLists;
 
 	printf("Size: %li \n", HT->size);
 	printf("Num of keys: %li \n", numOfKeys);
