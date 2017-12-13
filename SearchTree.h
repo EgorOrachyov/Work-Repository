@@ -256,6 +256,10 @@ int createBalancedTreeFromFile(SearchTree * STree, char * filename) {
 
 char * longToString(long num) {
     char * s = (char *)calloc(MAXSIZE, sizeof(char));
+    if (s == NULL) {
+        printf("Cannot allocate memory for string \n");
+        exit(1);
+    }
 
     int len = 0;
     int isNeg = 0;
