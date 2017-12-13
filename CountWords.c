@@ -17,6 +17,12 @@ void getMostCommonWord(data1 key, data2 value) {
 	}
 }
 
+data2 wordsNumber;
+
+void getNumOfWords(data1 key, data2 value) {
+	wordsNumber += value;
+}
+
 void printTable(data1 key, data2 value) {
 	printf("Key: %s  Value: %li \n", key, value);
 }
@@ -24,8 +30,11 @@ void printTable(data1 key, data2 value) {
 int main() {
 
 	char fileName[KByte];
-	printf("Enter file name to count words: \n");
-	gets(fileName);
+	int ok = 0;
+	while (!ok) {
+		printf("Enter file name to count words: \n");
+		ok = scanf("%s", fileName);
+	}
 
 	long size = 200000;
 	int simple = 17;
@@ -130,6 +139,10 @@ int main() {
 	mostPopularWordCount = 0;
 	iterateByKeyValue(HT, getMostCommonWord);
 	printf("word: %s used: %li \n", mostPopularWord, mostPopularWordCount);
+	printf("------- Number of Words -------- \n");
+	wordsNumber = 0;
+	iterateByKeyValue(HT, getNumOfWords);
+	printf("%li \n", wordsNumber);
 	printf("----- Hash Table Statistic ----- \n");
 	printHashTableStat(HT);
 	printf("Used time: %lf \n", currTime);

@@ -7,8 +7,6 @@ const long KByte = 1024;
 const long MByte = 1024 * 1024;
 const long GByte = 1024 * 1024 * 1024;
 
-const char * fileName = "Fifty Shades of Grey.txt";
-
 data1 mostPopularWord;
 data2 mostPopularWordCount;
 
@@ -19,11 +17,25 @@ void getMostCommonWord(data1 key, data2 value) {
 	}
 }
 
+data2 wordsNumber;
+
+void getNumOfWords(data1 key, data2 value) {
+	wordsNumber += value;
+}
+
 void printTable(data1 key, data2 value) {
 	printf("Key: %s  Value: %li \n", key, value);
 }
 
 int main() {
+
+	char fileName[KByte];
+	int ok = 0;
+	while (!ok) {
+		printf("Enter file name to count words: \n");
+		ok = scanf("%s", fileName);
+	}
+
 
 	long sizeListLength = 10;
 	long sizeList[] = {1, 2, 5, 10, 100, 1000, 10000, 100000, 500000, 20000000};
@@ -45,7 +57,7 @@ int main() {
 	int simple = 17;
 	HashTable * HT = createHashTable(size, getHash2, simple, &isOk);
 	if ((HT == NULL) || (isOk == 0)) {
-		printf("Error: cannnot create Hash Table \n");
+		printf("Error: cannot create Hash Table \n");
 		exit(1);
 	}
 
@@ -141,6 +153,10 @@ int main() {
 		mostPopularWordCount = 0;
 		iterateByKeyValue(HT, getMostCommonWord);
 		printf("word: %s used: %li \n", mostPopularWord, mostPopularWordCount);
+		printf("------- Number of Words -------- \n");
+		wordsNumber = 0;
+		iterateByKeyValue(HT, getNumOfWords);
+		printf("%li \n", wordsNumber);
 		printf("----- Hash Table Statistic ----- \n");
 		printHashTableStat(HT);
 		printf("Used time: %lf \n", currTime);
