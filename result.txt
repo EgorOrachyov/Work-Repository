@@ -1,0 +1,24 @@
+digraph optimalSearchTree { 
+	4->2 [color="blue"]; 
+	2->1 [color="blue"]; 
+	n1 [style=filled, fillcolor="grey", label="null"]; 
+	1->n1 [color="blue"]; 
+	n2 [style=filled, fillcolor="grey", label="null"]; 
+	1->n2 [color="red"]; 
+	2->3 [color="red"]; 
+	n3 [style=filled, fillcolor="grey", label="null"]; 
+	3->n3 [color="blue"]; 
+	n4 [style=filled, fillcolor="grey", label="null"]; 
+	3->n4 [color="red"]; 
+	4->6 [color="red"]; 
+	6->5 [color="blue"]; 
+	n5 [style=filled, fillcolor="grey", label="null"]; 
+	5->n5 [color="blue"]; 
+	n6 [style=filled, fillcolor="grey", label="null"]; 
+	5->n6 [color="red"]; 
+	6->7 [color="red"]; 
+	n7 [style=filled, fillcolor="grey", label="null"]; 
+	7->n7 [color="blue"]; 
+	n8 [style=filled, fillcolor="grey", label="null"]; 
+	7->n8 [color="red"]; 
+}
