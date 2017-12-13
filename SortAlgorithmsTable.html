@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th>Data Set</th>
+    <th>Count Sort O(n)</th> 
+    <th>Quick Sort O(n*log(n))</th>
+    <th>Merge Sort O(n*log(n))</th>
+    <th>Buble Sort O(n*n)</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>0.000021</td>
+    <td>0.000002</td>
+    <td>0.000002</td>
+    <td>0.000001</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>0.000009</td>
+    <td>0.000001</td>
+    <td>0.000005</td>
+    <td>0.000001</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>0.000012</td>
+    <td>0.000009</td>
+    <td>0.000023</td>
+    <td>0.000081</td>
+  </tr>
+  <tr>
+    <td>1000</td>
+    <td>0.000038</td>
+    <td>0.000101</td>
+    <td>0.000246</td>
+    <td>0.008183</td>
+  </tr>
+  <tr>
+    <td>10000</td>
+    <td>0.000243</td>
+    <td>0.001496</td>
+    <td>0.003079</td>
+    <td>0.839385</td>
+  </tr>
+  <tr>
+    <td>100000</td>
+    <td>0.002295</td>
+    <td>0.018949</td>
+    <td>0.038730</td>
+    <td>83.509512</td>
+  </tr>
+  <tr>
+    <td>1000000</td>
+    <td>0.023093</td>
+    <td>0.206579</td>
+    <td>0.442932</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td>10000000</td>
+    <td>0.230138</td>
+    <td>2.484629</td>
+    <td>5.099401</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td>100000000</td>
+    <td>2.299049</td>
+    <td>27.617131</td>
+    <td>58.802220</td>
+    <td>n/a</td>
+  </tr>
+</table>
+
+<p>*Time in seconds</p>
+
+</body>
+</html>
