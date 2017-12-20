@@ -111,7 +111,6 @@ int conditional(int x, int y, int z) {
 
 int isPower2(int x) {
 
-
 	int a = ~0;
 	int b = x >> 31;
 	int c = a ^ b;  
@@ -143,7 +142,7 @@ int main() {
 
 	printf("conditional: %i \n", conditional(2,4,5));
 
-	printf("isPower2: %i %i %i %i \n", isPower2(-2147483648), isPower2(16), isPower2(0+1), isPower2(-4));
+	printf("isPower2: %i %i %i %i \n", isPower2(-2147483648), isPower2(16), isPower2(0), isPower2(-4));
 
 	*/
 
