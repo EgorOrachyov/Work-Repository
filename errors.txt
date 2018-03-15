@@ -1,0 +1,34 @@
+; file, which involves "all" kinds of mistakes
+; types of mistakes:
+; 1) format mistakes
+; 2) semantic mistakes
+;
+
+_1: ldc 1000
+    add
+    %mm
+    sub 1
+    br  _2
+add sub ldc cmp
+_1: st
+    ldc
+    ldc hhh
+    ret
+    add 2
+    ldc
+
+_0: add
+_1: ldc
+_1: add
+    ddd
+8h: dd
+9h: add
+    add
+    ldc ww
+    br  _22
+    ret
+
+    add
+    sub
+    cmp
+    ret
