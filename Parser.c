@@ -181,6 +181,30 @@ void ExpandLabelsArray(ParserASM * parser)
     }
 }
 
+void ExpandLabelArgsArray(ParserASM * parser)
+{
+    if (parser->m_label_args_size <=0 )
+    {
+        parser->m_label_args_size = MEMORY_BASE;
+        parser->m_label_args = (Label *)calloc(parser->m_label_args_size, sizeof(Label));
+        if (parser->m_label_args == NULL)
+        {
+            printf("ERROR: Cannot allocate memory for labels' array \n");
+            exit(11);
+        }
+    }
+    else if (parser->m_label_args_size <= parser->m_num_of_label_args)
+    {
+        parser->m_label_args_size *= MEMORY_FACTOR;
+        parser->m_label_args = (Label *)realloc(parser->m_label_args, sizeof(Label) * parser->m_label_args_size);
+        if (parser->m_label_args == NULL)
+        {
+            printf("ERROR: Cannot allocate memory for labels' array \n");
+            exit(11);
+        }
+    }
+}
+
 void ExpandCommandsArray(ParserASM * parser)
 {
     if (parser->m_commands_size <=0 )
@@ -215,9 +239,11 @@ ParserASM * CreateParserASM()
     }
     parser->m_num_of_labels = 0;
     parser->m_num_of_commands = 0;
+    parser->m_num_of_label_args = 0;
 
     parser->m_labels_size = 0;
     parser->m_commands_size = 0;
+    parser->m_label_args_size = 0;
 
     return parser;
 }
@@ -233,6 +259,10 @@ void DeleteParserASM(const ParserASM * parser)
         if (parser->m_labels != NULL)
         {
             free(parser->m_labels);
+        }
+        if (parser->m_label_args != NULL)
+        {
+            free(parser->m_label_args);
         }
 
         free(parser);
@@ -387,7 +417,6 @@ int ParseASMFile(ParserASM * parser, const char * filename)
 
             if (words_count == FORMAT_LCA)
             {
-
                 if (IsLabelCorrect(words[0]))
                 {
                     ExpandLabelsArray(parser);
@@ -427,21 +456,12 @@ int ParseASMFile(ParserASM * parser, const char * filename)
 
                     if (IsCommandWithLabelArg(command_id))
                     {
-                        int is_found = FALSE;
-                        long jump_to  = 0;
-                        for(long j = 0; j < parser->m_num_of_labels; j++)
+                        if (IsLabelCorrect(words[2]))
                         {
-                            if (strcmp(words[2], parser->m_labels[j].m_label) == 0)
-                            {
-                                is_found = TRUE;
-                                jump_to = parser->m_labels[j].m_command_id;
-                                break;
-                            }
-                        }
-
-                        if (is_found)
-                        {
-                            parser->m_commands[parser->m_num_of_commands].m_argument = jump_to;
+                            ExpandLabelArgsArray(parser);
+                            memcpy(parser->m_label_args[parser->m_num_of_label_args].m_label, words[2], sizeof(char) * STRING_SIZE);
+                            parser->m_label_args[parser->m_num_of_label_args].m_command_id = parser->m_num_of_commands;
+                            parser->m_num_of_label_args += 1;
                         }
                         else
                         {
@@ -486,21 +506,12 @@ int ParseASMFile(ParserASM * parser, const char * filename)
 
                     if (IsCommandWithLabelArg(command_id))
                     {
-                        int is_found = FALSE;
-                        long jump_to  = 0;
-                        for(long j = 0; j < parser->m_num_of_labels; j++)
+                        if (IsLabelCorrect(words[2]))
                         {
-                            if (strcmp(words[1], parser->m_labels[j].m_label) == 0)
-                            {
-                                is_found = TRUE;
-                                jump_to = parser->m_labels[j].m_command_id;
-                                break;
-                            }
-                        }
-
-                        if (is_found)
-                        {
-                            parser->m_commands[parser->m_num_of_commands].m_argument = jump_to;
+                            ExpandLabelArgsArray(parser);
+                            memcpy(parser->m_label_args[parser->m_num_of_label_args].m_label, words[1], sizeof(char) * STRING_SIZE);
+                            parser->m_label_args[parser->m_num_of_label_args].m_command_id = parser->m_num_of_commands;
+                            parser->m_num_of_label_args += 1;
                         }
                         else
                         {
@@ -608,6 +619,36 @@ int ParseASMFile(ParserASM * parser, const char * filename)
         }
 
         fclose(file);
+
+        /////////// ASSOCIATION OF COMANDS WITH LABEL ARGS AND COMMANDS ID /////////
+        /// Go through parser's labels and label_args arrays
+        /// to associate a command and command, which
+        /// links to the last one, or give an error,
+        /// that link was not found
+
+        if (!has_error)
+        {
+            for(long i = 0; i < parser->m_num_of_label_args; i++)
+            {
+                int is_found = FALSE;
+                for(long j = 0; j < parser->m_num_of_labels; j++)
+                {
+                    if (strcmp(parser->m_label_args[i].m_label, parser->m_labels[j].m_label) == 0)
+                    {
+                        is_found = TRUE;
+                        parser->m_commands[parser->m_label_args[i].m_command_id].m_argument = parser->m_labels[j].m_command_id;
+                        break;
+                    }
+                }
+
+                if (!is_found)
+                {
+                    printf("ERROR: Label is not found -> %s ->\n", parser->m_label_args[i].m_label);
+                    has_error = TRUE;
+                    break;
+                }
+            }
+        }
 
         if (has_error)
         {
