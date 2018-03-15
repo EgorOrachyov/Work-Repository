@@ -432,7 +432,7 @@ int ParseASMFile(ParserASM * parser, const char * filename)
 
                     if (is_copied)
                     {
-                        printf("ERROR: duplicated label in line %li \n -> \"%s\"\n", line_index, buffer);
+                        printf("ERROR: Duplicated label in line %li \n -> \"%s\"\n", line_index, buffer);
                         has_error = TRUE;
                     }
                     else
@@ -484,7 +484,7 @@ int ParseASMFile(ParserASM * parser, const char * filename)
                     }
                     else
                     {
-                        printf("ERROR: This command do not get any argument line %li \n -> \"%s\"\n", line_index, buffer);
+                        printf("ERROR: This command do not get any argument in line %li \n -> \"%s\"\n", line_index, buffer);
                         has_error = TRUE;
                     }
 
@@ -534,7 +534,7 @@ int ParseASMFile(ParserASM * parser, const char * filename)
                     }
                     else
                     {
-                        printf("ERROR: This command do not get any argument line %li \n -> \"%s\"\n", line_index, buffer);
+                        printf("ERROR: This command do not get any argument in line %li \n -> \"%s\"\n", line_index, buffer);
                         has_error = TRUE;
                     }
 
@@ -557,7 +557,7 @@ int ParseASMFile(ParserASM * parser, const char * filename)
 
                         if (is_copied)
                         {
-                            printf("ERROR: duplicated label in line %li \n -> \"%s\"\n", line_index, buffer);
+                            printf("ERROR: Duplicated label in line %li \n -> \"%s\"\n", line_index, buffer);
                             has_error = TRUE;
                         }
                         else
