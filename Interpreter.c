@@ -52,7 +52,7 @@ void InitMainLoop(Interpreter * obj, int mode)
 
     double work_time = (double)clock();
 
-    if (mode == FAST_MODE)
+    if (mode == SAFE_MODE)
     {
         int is_ret_found = FALSE;
 
