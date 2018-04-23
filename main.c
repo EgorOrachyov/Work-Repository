@@ -15,19 +15,21 @@ int main()
 
         int mode = SAFE_MODE;
         char filename[STRING_SIZE] = "\0";
-        int scanned_ards = 0;
+        int scanned_args = 0;
 
-        int key;
+        char buffer = 0;
+        int key = 0;
         int flag = FALSE;
         while (!flag)
         {
             printf("1. Interpret from file \n");
             printf("2. Exit Application \n");
             printf("Enter num of action: ");
-            scanned_ards = scanf("%i", &key);
-            if (scanned_ards && key >= 1 && key <= 2)
+            fscanf(stdin, "%c", &buffer);
+            if (buffer >= '1' && buffer <= '2')
             {
                 flag = TRUE;
+                key = buffer - '0';
             }
         }
 
@@ -41,21 +43,23 @@ int main()
             while (!flag)
             {
                 printf("Enter filename: ");
-                scanned_ards = scanf("%s", filename);
-                if (scanned_ards)
+                scanned_args = fscanf(stdin, "%s", filename);
+                if (scanned_args)
                 {
                     flag = TRUE;
                 }
             }
 
+            buffer = 0;
             flag = FALSE;
             while (!flag)
             {
                 printf("Enter mode (0 - SAFE mode / 1 - FAST mode): ");
-                scanned_ards = scanf("%i", &mode);
-                if (scanned_ards && mode >= 0 && mode <= 1)
+                fscanf(stdin, "%c", &buffer);
+                if (buffer >= '0' && buffer <= '1')
                 {
                     flag = TRUE;
+                    mode = buffer - '0';
                 }
             }
 
