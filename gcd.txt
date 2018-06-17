@@ -1,0 +1,202 @@
+; Greatest common divisor
+; VitASM program
+; created by Orachyov Egor
+; 15.03.2018
+
+; enter first number
+
+            ldc -440
+
+; enter second number
+
+            ldc 90
+
+; gcd will be placed on the
+; top of the stack
+
+; unload numbers from stack
+
+            st 2
+            st 1
+
+; load at least one number
+
+            ;ldc 0
+
+; check 1 num
+
+            ld 1
+            ldc 0
+            cmp
+            br sec_num
+
+            st 0
+            st 0
+            st 0
+
+            ld 2
+            jmp pr_end
+
+; if 1 num not 0, check 2 num
+
+sec_num:    ld 2
+            ldc 0
+            cmp
+            br check_sign
+
+            st 0
+            st 0
+            st 0
+
+            ld 1
+            jmp pr_end
+
+; check sign for 1 and 2 numbers
+; firstly, unload stack
+
+check_sign: st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+
+; check 1 for negative num
+
+            ld 1
+            ldc 0
+            cmp
+            ldc 1
+            cmp
+            br check_2
+
+            ldc 0
+            ldc 0
+            st 3
+repeat_1:   ld 3
+            ldc 1
+            add
+            st 3
+            ld 1
+            ldc 1
+            add
+            st 1
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            ld 1
+            br repeat_1
+            ld 3
+            st 1
+            st 0
+
+; check 2 for negative num
+
+check_2:    ld 2
+            ldc 0
+            cmp
+            ldc 1
+            cmp
+            br main
+
+            ldc 0
+            ldc 0
+            st 3
+repeat_2:   ld 3
+            ldc 1
+            add
+            st 3
+            ld 2
+            ldc 1
+            add
+            st 2
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            ld 2
+            br repeat_2
+            ld 3
+            st 2
+            st 0
+
+; main part of counting
+
+main:       st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            ldc 0
+
+loop:       ld 1
+            ld 2
+            sub      ; 2 - 1
+            ldc 0
+            cmp
+            ldc 1
+            cmp      ; if 2 < 1 -> =0
+
+            st 3
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+            ld 3
+
+            br subtract
+
+; swap 1 and 2 numbers
+
+            ld 1
+            ld 2
+            st 1
+            st 2
+
+; subtract smallest from biggest num
+
+subtract:   st 0
+
+            ld 1
+            ld 2
+            sub
+            st 2     ; (1, 2 - 1)
+
+            ldc 0
+            ld 2
+            cmp
+            st 3
+
+; reduce num of stack elements
+
+            st 0
+            st 0
+            st 0
+            st 0
+            st 0
+
+; if it is not evaluated
+
+            ld 3
+            br loop
+
+; else get answer
+
+            st 0
+            jmp get_answer
+
+get_answer: ld 1
+
+pr_end:     ret
+
+
