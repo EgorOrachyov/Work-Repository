@@ -1,4 +1,7 @@
-# Work-Repository
+# SPBU-HOMEWORK-I
 
-It will be used for creating and sharing some programs 
-on different programming languages
+Saint Petersburg State University
+Mathematics and Mechanics
+Software Engineering
+
+Programming Workshop (C language)

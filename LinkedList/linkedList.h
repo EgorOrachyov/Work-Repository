@@ -4,30 +4,41 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <string.h>
 
 const int TRUE = 1;
 const int FALSE = 0;
 
-typedef char * data1;
-typedef long data2;
+typedef int data;
 
 
 struct _Node {
-	data1 key;            // Pointer to buffer string
-	data2 value;          // Number of words
-	struct _Node * next;  // Pointer to the next list element
+	data value;    // Data value
+	struct _Node * next;   // Pointer to the next list element
 };
 
 typedef struct _Node Node;
 
 struct _LinkedList {
-	long length;   // Size of list
+	long length; // Size of list
 	Node * head;   // Pointer to the head of the list
 	//Node * end;  // Pointer to last list element
 };
 
 typedef struct _LinkedList LinkedList;
+
+
+// Undefined behaviour, avoid using
+// Create LinkedList
+int iCreateLinkedList(LinkedList * list) {
+	list = (LinkedList *)calloc(1, sizeof(LinkedList));
+	if (list != NULL) {
+		list->length = 0;
+		return TRUE;
+	} 
+	else {
+		return FALSE;
+	}
+}
 
 
 // Create LinkedList
@@ -44,11 +55,25 @@ LinkedList * lCreateLinkedList() {
 }
 
 
+// Undefined behaviour , avoid using
+// Create node and get error message
+int iCreateNode(Node * node, data value) {
+	node = (Node *)calloc(1, sizeof(Node));
+	if (node != NULL) {
+		node->value = value;
+		node->next = NULL;
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+
 // Create node
-Node * nCreateNode(data1 key, data2 value) {
+Node * nCreateNode(data value) {
 	Node * node = (Node *)calloc(1, sizeof(Node));
 	if (node) {
-		node->key = key;
 		node->value = value;
 		node->next = NULL;
 		return node;
@@ -60,9 +85,9 @@ Node * nCreateNode(data1 key, data2 value) {
 
 
 // Add element in the beginning of list
-int addIntoBeginning(LinkedList * list, data1 key, data2 value) {
+int addIntoBeginning(LinkedList * list, data value) {
 	Node * node;
-	node = nCreateNode(key, value);
+	node = nCreateNode(value);
 	if (node) {
 		node->next = list->head;
 		list->head = node;
@@ -76,9 +101,9 @@ int addIntoBeginning(LinkedList * list, data1 key, data2 value) {
 
 
 // Add element is the end of list
-int addIntoEnd(LinkedList * list, data1 key, data2 value) {
+int addIntoEnd(LinkedList * list, data value) {
 	Node * node;
-	node = nCreateNode(key, value);
+	node = nCreateNode(value); 
 	if (node) {
 		if (list->head == NULL) { 
 			list->head = node;
@@ -100,9 +125,9 @@ int addIntoEnd(LinkedList * list, data1 key, data2 value) {
 
 
 // Add element in the list after node prev
-int addAfterN(LinkedList * list, Node * prev, data1 key, data2 value) {
+int addAfterN(LinkedList * list, Node * prev, data value) {
 	Node * current = list->head;
-	Node * node = nCreateNode(key, value);
+	Node * node = nCreateNode(value);
 
 	if (node) {
 		while (current) {
@@ -124,9 +149,9 @@ int addAfterN(LinkedList * list, Node * prev, data1 key, data2 value) {
 
 
 // Add element in the list after alement with n = index 
-int addAfterI(LinkedList * list, long index, data1 key, data2 value) {
+int addAfterI(LinkedList * list, long index, data value) {
 	Node * current = list->head;
-	Node * node = nCreateNode(key, value);
+	Node * node = nCreateNode(value);
 
 	if (node) {
 		if (index == -1) {
@@ -163,31 +188,26 @@ void freeLinkedList(LinkedList * list) {
 	Node * current = list->head;
 	Node * tmp;
 	
-	for(long i = 0; i < list->length; i++) {	
+	for(int i = 0; i < list->length; i++) {	
 		tmp = current->next;
 		free(current);
 		current = tmp;
+		i += 1;
 	}
-	
 	list->head = NULL;
 	list->length = 0;
 }
 
-// Delete linked list and free its allocated memory
-void deleteLinkedList(LinkedList * list) {
-	freeLinkedList(list);
-	free(list);
-}
 
 // Delete elements, which have this value
-int deleteElementByValue(LinkedList * list, data1 key) {
+int deleteElementByValue(LinkedList * list, data value) {
 	Node * ptr1 = NULL;
 	Node * ptr2 = list->head;
 	Node * ptr3 = ptr2->next;
 	int count = 0;
 
 	while (ptr2) { 
-		if (ptr2->key == key) {
+		if (ptr2->value == value) {
 			if (ptr1 == NULL) {
 				list->head = ptr3;
 			} 
@@ -218,45 +238,6 @@ int deleteElementByValue(LinkedList * list, data1 key) {
 }
 
 
-// Finds node in list by key
-Node * getElementFromList(LinkedList * list, data1 key) {
-	Node * node = NULL;
-	Node * current = list->head;
-
-	long i = 0;
-	while (i < list->length) {
-		if (strcmp(current->key, key) == 0) { 
-			node = current;
-			break;
-		}
-
-		i = i + 1;
-		current = current->next;
-	}
-
-	return node;
-} 
-
-int getValueFromList(LinkedList * list, data1 key, data2 * value) {
-	int isIn = FALSE;
-	Node * current = list->head;
-
-	long i = 0;
-	while (i < list->length) {
-		if (strcmp(current->key, key) == 0) {
-			*value = current->value; 
-			isIn = TRUE;
-			break;
-		}
-
-		i = i + 1;
-		current = current->next;
-	}
-
-	return isIn;
-}
-
-
 // Print value of each element of linked list
 // Actual for looped list
 void printLinkedList(LinkedList * list) {
@@ -264,7 +245,7 @@ void printLinkedList(LinkedList * list) {
 	long i = 0;
 
 	while (i < list->length) {
-		printf("element[%li]: key = %s; value = %li;\n", i, current->key, current->value);
+		printf("element[%li]->value = %i \n", i, current->value);
 		current = current->next;		
 		i += 1;
 	}
